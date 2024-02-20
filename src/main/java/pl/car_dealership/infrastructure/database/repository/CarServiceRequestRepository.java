@@ -18,7 +18,7 @@ public class CarServiceRequestRepository implements CarServiceRequestDAO {
             }
             session.beginTransaction();
             String query = """
-                    SELECT sr from CarServiceRequestEntity sr
+                    SELECT sr from CarServiceRequestJpaRepository sr
                     WHERE sr.car.vin = :vin
                     AND sr.completedDateTime IS NULL
                     """;

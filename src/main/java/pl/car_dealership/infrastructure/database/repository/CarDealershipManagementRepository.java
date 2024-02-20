@@ -14,18 +14,18 @@ public class CarDealershipManagementRepository implements CarDealershipManagemen
                 throw new RuntimeException("Session is null");
             }
             session.beginTransaction();
-            session.createMutationQuery("DELETE FROM ServiceMechanicEntity ent").executeUpdate();
-            session.createMutationQuery("DELETE FROM ServicePartEntity ent").executeUpdate();
-            session.createMutationQuery("DELETE FROM CarServiceRequestEntity ent").executeUpdate();
-            session.createMutationQuery("DELETE FROM InvoiceEntity ent").executeUpdate();
-            session.createMutationQuery("DELETE FROM MechanicEntity ent").executeUpdate();
-            session.createMutationQuery("DELETE FROM PartEntity ent").executeUpdate();
-            session.createMutationQuery("DELETE FROM ServiceEntity ent").executeUpdate();
-            session.createMutationQuery("DELETE FROM CarToServiceEntity ent").executeUpdate();
-            session.createMutationQuery("DELETE FROM CarToBuyEntity ent").executeUpdate();
-            session.createMutationQuery("DELETE FROM CustomerEntity ent").executeUpdate();
-            session.createMutationQuery("DELETE FROM AddressEntity ent").executeUpdate();
-            session.createMutationQuery("DELETE FROM SalesmanEntity ent").executeUpdate();
+            session.createMutationQuery("DELETE FROM ServiceMechanicJpaRepository ent").executeUpdate();
+            session.createMutationQuery("DELETE FROM ServicePartJpaRepository ent").executeUpdate();
+            session.createMutationQuery("DELETE FROM CarServiceRequestJpaRepository ent").executeUpdate();
+            session.createMutationQuery("DELETE FROM InvoiceJpaRepository ent").executeUpdate();
+            session.createMutationQuery("DELETE FROM MechanicJpaRepository ent").executeUpdate();
+            session.createMutationQuery("DELETE FROM PartJpaRepository ent").executeUpdate();
+            session.createMutationQuery("DELETE FROM ServiceJpaRepository ent").executeUpdate();
+            session.createMutationQuery("DELETE FROM CarToServiceJpaRepository ent").executeUpdate();
+            session.createMutationQuery("DELETE FROM CarToBuyJpaRepository ent").executeUpdate();
+            session.createMutationQuery("DELETE FROM CustomerJpaRepository ent").executeUpdate();
+            session.createMutationQuery("DELETE FROM AddressJpaRepository ent").executeUpdate();
+            session.createMutationQuery("DELETE FROM SalesmanJpaRepository ent").executeUpdate();
             session.getTransaction().commit();
         }
     }
