@@ -1,15 +1,15 @@
 package pl.car_dealership.business.dao;
 
-import pl.car_dealership.infrastructure.database.entity.CustomerEntity;
+import pl.car_dealership.domain.Customer;
 
 import java.util.Optional;
 
 public interface CustomerDAO {
-    Optional<CustomerEntity> findCustomerByEmail(String email);
+    Optional<Customer> findCustomerByEmail(String email);
 
-    void issueInvoice(CustomerEntity customer);
+    void issueInvoice(Customer customer);
 
-    void saveServiceRequest(CustomerEntity customer);
+    void saveServiceRequest(Customer customer);
 
-    CustomerEntity saveCustomer(CustomerEntity entity);
+    Customer saveCustomer(Customer customer);
 }

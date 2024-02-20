@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import pl.car_dealership.business.*;
 import pl.car_dealership.business.dao.*;
-import pl.car_dealership.business.management.CarDealershipManagementService;
 import pl.car_dealership.business.management.FileDataPreparationService;
 import pl.car_dealership.infrastructure.database.repository.*;
 import pl.car_dealership.repository.*;

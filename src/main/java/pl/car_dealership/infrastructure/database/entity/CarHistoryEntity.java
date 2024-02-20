@@ -30,7 +30,7 @@ public class CarHistoryEntity {
         @Override
         public String toString() {
             return "ServiceRequest{" +
-                    "serviceRequestNumber='" + serviceRequestNumber + '\'' +
+                    "carServiceRequestNumber='" + serviceRequestNumber + '\'' +
                     ", receivedDateTime=" + receivedDateTime +
                     ", completionDateTime=" + completionDateTime +
                     ", customerComment='" + customerComment +

@@ -2,12 +2,10 @@ package pl.car_dealership.business;
 
 import lombok.AllArgsConstructor;
 import pl.car_dealership.business.dao.CustomerDAO;
-import pl.car_dealership.domain.CarServiceRequest;
 import pl.car_dealership.infrastructure.database.entity.AddressEntity;
 import pl.car_dealership.infrastructure.database.entity.CustomerEntity;
 
 import java.util.Optional;
-import java.util.Set;
 
 @AllArgsConstructor
 public class CustomerService {

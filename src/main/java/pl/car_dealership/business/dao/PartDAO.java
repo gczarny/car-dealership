@@ -1,9 +1,9 @@
 package pl.car_dealership.business.dao;
 
-import pl.car_dealership.infrastructure.database.entity.PartEntity;
+import pl.car_dealership.domain.Part;
 
 import java.util.Optional;
 
 public interface PartDAO {
-    Optional<PartEntity> findBySerialNumber(String serialNumber);
+    Optional<Part> findBySerialNumber(String serialNumber);
 }

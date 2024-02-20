@@ -1,11 +1,12 @@
 package pl.car_dealership.business.dao;
 
-import pl.car_dealership.infrastructure.database.entity.CarServiceRequestEntity;
-import pl.car_dealership.infrastructure.database.entity.ServiceMechanicEntity;
-import pl.car_dealership.infrastructure.database.entity.ServicePartEntity;
+
+import pl.car_dealership.domain.CarServiceRequest;
+import pl.car_dealership.domain.ServiceMechanic;
+import pl.car_dealership.domain.ServicePart;
 
 public interface ServiceRequestProcessingDAO {
-    void process(CarServiceRequestEntity serviceRequest, ServiceMechanicEntity serviceMechanicEntity);
+    void process(CarServiceRequest serviceRequest, ServiceMechanic serviceMechanic);
 
-    void process(CarServiceRequestEntity serviceRequest, ServiceMechanicEntity serviceMechanicEntity, ServicePartEntity servicePartEntity);
+    void process(CarServiceRequest serviceRequest, ServiceMechanic serviceMechanic, ServicePart servicePart);
 }

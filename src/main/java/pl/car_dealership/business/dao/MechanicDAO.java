@@ -1,10 +1,10 @@
 package pl.car_dealership.business.dao;
 
-import pl.car_dealership.infrastructure.database.entity.MechanicEntity;
+import pl.car_dealership.domain.Mechanic;
 
 import java.util.Optional;
 
 public interface MechanicDAO {
 
-    Optional<MechanicEntity> findByPesel(String pesel);
+    Optional<Mechanic> findByPesel(String pesel);
 }

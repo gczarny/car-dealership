@@ -3,7 +3,6 @@ package pl.car_dealership.business;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.car_dealership.business.dao.CarDAO;
-import pl.car_dealership.domain.CarServiceRequest;
 import pl.car_dealership.infrastructure.database.entity.CarHistoryEntity;
 import pl.car_dealership.infrastructure.database.entity.CarToBuyEntity;
 import pl.car_dealership.infrastructure.database.entity.CarToServiceEntity;
