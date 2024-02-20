@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import pl.car_dealership.business.dao.CarToBuyDAO;
 import pl.car_dealership.domain.CarToBuy;
 import pl.car_dealership.infrastructure.database.repository.jpa.CarToBuyJpaRepository;
+import pl.car_dealership.infrastructure.database.repository.mapper.CarToBuyEntityMapper;
 
 import java.util.Optional;
 
@@ -14,11 +15,11 @@ import java.util.Optional;
 public class CarToBuyRepository implements CarToBuyDAO {
 
     private final CarToBuyJpaRepository carToBuyJpaRepository;
-    private final CarToBuyMapper carToBuyMapper;
+    private final CarToBuyEntityMapper carToBuyEntityMapper;
 
     @Override
     public Optional<CarToBuy> findCarToBuyByVin(String vin) {
         return carToBuyJpaRepository.findByVin(vin)
-                .map(carToBuyMapper::mapFromEntity);
+                .map(carToBuyEntityMapper::mapFromEntity);
     }
 }

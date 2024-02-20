@@ -34,5 +34,5 @@ public class CarToServiceEntity {
     private Integer year;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
-    private Set<CarServiceRequestEntity> carServiceRequestEntities;
+    private Set<CarServiceRequestEntity> carServiceRequests;
 }

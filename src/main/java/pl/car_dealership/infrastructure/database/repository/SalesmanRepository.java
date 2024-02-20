@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import pl.car_dealership.business.dao.SalesmanDAO;
 import pl.car_dealership.domain.Salesman;
 import pl.car_dealership.infrastructure.database.repository.jpa.SalesmanJpaRepository;
+import pl.car_dealership.infrastructure.database.repository.mapper.SalesmanEntityMapper;
 
 import java.util.Optional;
 
@@ -14,11 +15,11 @@ import java.util.Optional;
 public class SalesmanRepository implements SalesmanDAO {
 
     private final SalesmanJpaRepository salesmanJpaRepository;
-    private final SalesmanMapper salesmanMapper;
+    private final SalesmanEntityMapper salesmanEntityMapper;
 
     @Override
     public Optional<Salesman> findByPesel(String pesel) {
         return salesmanJpaRepository.findByPesel(pesel)
-                .map(salesmanMapper::mapFromEntity);
+                .map(salesmanEntityMapper::mapFromEntity);
     }
 }

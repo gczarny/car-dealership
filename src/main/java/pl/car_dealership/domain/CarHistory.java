@@ -13,7 +13,7 @@ import java.util.List;
 public class CarHistory {
 
     String carVin;
-    List<CarServiceRequest> carCarServiceRequests;
+    List<CarServiceRequest> carServiceRequests;
 
     @Value
     @Builder

@@ -5,12 +5,14 @@ import org.springframework.stereotype.Repository;
 import pl.car_dealership.business.dao.CustomerDAO;
 import pl.car_dealership.domain.Customer;
 import pl.car_dealership.infrastructure.database.entity.CarServiceRequestEntity;
-import pl.car_dealership.infrastructure.database.entity.CarToServiceEntity;
 import pl.car_dealership.infrastructure.database.entity.CustomerEntity;
 import pl.car_dealership.infrastructure.database.entity.InvoiceEntity;
 import pl.car_dealership.infrastructure.database.repository.jpa.CarServiceRequestJpaRepository;
 import pl.car_dealership.infrastructure.database.repository.jpa.CustomerJpaRepository;
 import pl.car_dealership.infrastructure.database.repository.jpa.InvoiceJpaRepository;
+import pl.car_dealership.infrastructure.database.repository.mapper.CarServiceRequestMapper;
+import pl.car_dealership.infrastructure.database.repository.mapper.CustomerEntityMapper;
+import pl.car_dealership.infrastructure.database.repository.mapper.InvoiceEntityMapper;
 
 import java.util.List;
 import java.util.Optional;

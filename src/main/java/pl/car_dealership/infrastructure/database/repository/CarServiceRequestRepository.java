@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import pl.car_dealership.business.dao.CarServiceRequestDAO;
 import pl.car_dealership.domain.CarServiceRequest;
 import pl.car_dealership.infrastructure.database.repository.jpa.CarServiceRequestJpaRepository;
+import pl.car_dealership.infrastructure.database.repository.mapper.CarServiceRequestEntityMapper;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -19,7 +20,7 @@ public class CarServiceRequestRepository implements CarServiceRequestDAO {
     public Set<CarServiceRequest> findActiveServiceRequestsByCarVin(String carVin) {
 
         return carServiceRequestJpaRepository.findActiveServiceRequestsByCarVin(carVin).stream()
-                .map(obj -> carServiceRequestEntityMapper.mapFromEntity(obj))
+                .map(carServiceRequestEntityMapper::mapFromEntity)
                 .collect(Collectors.toSet());
     }
 }

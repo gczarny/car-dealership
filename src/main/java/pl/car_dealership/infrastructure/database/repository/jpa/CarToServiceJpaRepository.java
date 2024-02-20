@@ -11,6 +11,8 @@ import java.util.Optional;
 public interface CarToServiceJpaRepository extends JpaRepository<CarToServiceEntity, Long> {
 
 
+    Optional<CarToServiceEntity> findByVin(String vin);
+
     @EntityGraph(
             type = EntityGraph.EntityGraphType.FETCH,
             attributePaths = {"carServiceRequests",
@@ -21,6 +23,4 @@ public interface CarToServiceJpaRepository extends JpaRepository<CarToServiceEnt
             }
     )
     CarToServiceEntity findCarHistoryByVin(String vin);
-
-    Optional<CarToServiceEntity> findByVin(String vin);
 }

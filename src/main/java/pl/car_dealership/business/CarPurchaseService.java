@@ -2,6 +2,7 @@ package pl.car_dealership.business;
 
 
 import lombok.AllArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import pl.car_dealership.business.management.FileDataPreparationService;
 import pl.car_dealership.domain.*;
 
@@ -18,6 +19,7 @@ public class CarPurchaseService {
     private final CarService carService;
     private final SalesmanService salesmanService;
 
+    @Transactional
     public void purchase() {
         var firstTimePurchaseData = fileDataPreparationService.prepareFirstTimePurchaseData();
         var nextTimePurchaseData = fileDataPreparationService.prepareNextTimePurchaseData();

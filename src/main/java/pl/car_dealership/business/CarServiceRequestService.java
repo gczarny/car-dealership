@@ -1,6 +1,7 @@
 package pl.car_dealership.business;
 
 import lombok.AllArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import pl.car_dealership.business.dao.CarServiceRequestDAO;
 import pl.car_dealership.business.management.FileDataPreparationService;
 import pl.car_dealership.domain.CarServiceRequest;
@@ -87,6 +88,7 @@ public class CarServiceRequestService {
         return new Random().nextInt(max - min) + min;
     }
 
+    @Transactional
     public CarServiceRequest findAnyActiveServiceRequest(String carVin) {
         Set<CarServiceRequest> serviceRequests = carServiceRequestDAO.findActiveServiceRequestsByCarVin(carVin);
         if (serviceRequests.size() != 1) {

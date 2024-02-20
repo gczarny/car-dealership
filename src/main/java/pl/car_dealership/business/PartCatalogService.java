@@ -1,6 +1,7 @@
 package pl.car_dealership.business;
 
 import lombok.AllArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import pl.car_dealership.business.dao.PartDAO;
 import pl.car_dealership.domain.Part;
 
@@ -11,6 +12,8 @@ public class PartCatalogService {
 
     private final PartDAO partDAO;
 
+
+    @Transactional
     public Part findPart(String partSerialNumber) {
         Optional<Part> part = partDAO.findBySerialNumber(partSerialNumber);
         if (part.isEmpty()) {

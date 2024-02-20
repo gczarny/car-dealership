@@ -15,6 +15,8 @@ import pl.car_dealership.infrastructure.database.repository.jpa.CarServiceReques
 import pl.car_dealership.infrastructure.database.repository.jpa.PartJpaRepository;
 import pl.car_dealership.infrastructure.database.repository.jpa.ServiceMechanicJpaRepository;
 import pl.car_dealership.infrastructure.database.repository.jpa.ServicePartJpaRepository;
+import pl.car_dealership.infrastructure.database.repository.mapper.ServiceMechanicEntityMapper;
+import pl.car_dealership.infrastructure.database.repository.mapper.ServicePartEntityMapper;
 
 import java.util.Objects;
 

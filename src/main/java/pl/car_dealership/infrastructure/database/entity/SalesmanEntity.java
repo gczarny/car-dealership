@@ -31,6 +31,6 @@ public class SalesmanEntity {
     private String pesel;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "salesman")
-    private Set<InvoiceEntity> invoice;
+    private Set<InvoiceEntity> invoices;
 
 }

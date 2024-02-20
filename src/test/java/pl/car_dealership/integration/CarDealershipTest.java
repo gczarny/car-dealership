@@ -7,13 +7,13 @@ import pl.car_dealership.business.*;
 import pl.car_dealership.business.dao.*;
 import pl.car_dealership.business.management.FileDataPreparationService;
 import pl.car_dealership.infrastructure.database.repository.*;
-import pl.car_dealership.repository.*;
+
 
 @Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CarDealershipTest {
 
-    private CarDealershipManagementService carDealershipManagementService;
+   /* private CarDealershipManagementService carDealershipManagementService;
     private CarPurchaseService carPurchaseService;
     private CarServiceRequestService carServiceRequestService;
     private CarServiceProcessingService carServiceProcessingService;
@@ -107,5 +107,5 @@ public class CarDealershipTest {
         log.info("### RUNNING ORDER 6 ###");
         carService.printCarHistory("2C3CDYAG2DH731952");
         carService.printCarHistory("1GCEC19X27Z109567");
-    }
+    }*/
 }

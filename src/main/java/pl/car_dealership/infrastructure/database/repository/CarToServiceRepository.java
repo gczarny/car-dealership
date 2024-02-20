@@ -6,8 +6,8 @@ import pl.car_dealership.business.dao.CarToServiceDAO;
 import pl.car_dealership.domain.CarHistory;
 import pl.car_dealership.domain.CarToService;
 import pl.car_dealership.infrastructure.database.entity.CarToServiceEntity;
-import pl.car_dealership.infrastructure.database.repository.jpa.CarToBuyJpaRepository;
 import pl.car_dealership.infrastructure.database.repository.jpa.CarToServiceJpaRepository;
+import pl.car_dealership.infrastructure.database.repository.mapper.CarToServiceEntityMapper;
 
 import java.util.Optional;
 
@@ -17,24 +17,24 @@ import java.util.Optional;
 public class CarToServiceRepository implements CarToServiceDAO {
 
     private final CarToServiceJpaRepository carToServiceJpaRepository;
-    private CarToServiceMapper carToServiceMapper;
+    private CarToServiceEntityMapper carToServiceEntityMapper;
 
     @Override
     public Optional<CarToService> findCarToServiceByVin(String vin) {
         return carToServiceJpaRepository.findByVin(vin)
-                .map(carToServiceMapper::mapFromEntity);
+                .map(carToServiceEntityMapper::mapFromEntity);
     }
 
     @Override
     public CarToService saveCarToService(CarToService carToService) {
-        CarToServiceEntity carToServiceEntity = carToServiceMapper.mapToEntity(entity);
+        CarToServiceEntity carToServiceEntity = carToServiceEntityMapper.mapToEntity(carToService);
         CarToServiceEntity saved = carToServiceJpaRepository.save(carToServiceEntity);
-        return carToServiceMapper.mapFromEntity(saved);
+        return carToServiceEntityMapper.mapFromEntity(saved);
     }
 
     @Override
     public CarHistory findCarHistoryByVin(String vin) {
         CarToServiceEntity carHistoryByVin = carToServiceJpaRepository.findCarHistoryByVin(vin);
-        return carToServiceMapper.mapFromEntity(vin, carHistoryByVin);
+        return carToServiceEntityMapper.mapFromEntity(vin, carHistoryByVin);
     }
 }
