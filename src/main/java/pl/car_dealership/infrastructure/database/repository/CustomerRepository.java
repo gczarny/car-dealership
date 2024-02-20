@@ -1,76 +1,68 @@
 package pl.car_dealership.infrastructure.database.repository;
 
-import org.hibernate.Session;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Repository;
 import pl.car_dealership.business.dao.CustomerDAO;
+import pl.car_dealership.domain.Customer;
+import pl.car_dealership.infrastructure.database.entity.CarServiceRequestEntity;
+import pl.car_dealership.infrastructure.database.entity.CarToServiceEntity;
 import pl.car_dealership.infrastructure.database.entity.CustomerEntity;
+import pl.car_dealership.infrastructure.database.entity.InvoiceEntity;
+import pl.car_dealership.infrastructure.database.repository.jpa.CarServiceRequestJpaRepository;
+import pl.car_dealership.infrastructure.database.repository.jpa.CustomerJpaRepository;
+import pl.car_dealership.infrastructure.database.repository.jpa.InvoiceJpaRepository;
 
-import java.util.Objects;
+import java.util.List;
 import java.util.Optional;
 
+
+@Repository
+@AllArgsConstructor
 public class CustomerRepository implements CustomerDAO {
-    @Override
-    public Optional<CustomerEntity> findCustomerByEmail(String email) {
-        try (Session session = HibernateUtil.getSession()) {
-            if (Objects.isNull(session)) {
-                throw new RuntimeException("Session is null");
-            }
-            session.beginTransaction();
 
-            String query = "SELECT cu FROM CustomerJpaRepository cu WHERE cu.email = :email";
-            Optional<CustomerEntity> salesmanEntity = session.createQuery(query, CustomerEntity.class)
-                    .setParameter("email", email)
-                    .uniqueResultOptional();
-            session.getTransaction().commit();
-            return salesmanEntity;
-        }
+    private final CustomerJpaRepository customerJpaRepository;
+    private final InvoiceJpaRepository invoiceJpaRepository;
+    private final CarServiceRequestJpaRepository carServiceRequestJpaRepository;
+    private final CustomerEntityMapper customerEntityMapper;
+    private final InvoiceEntityMapper invoiceEntityMapper;
+    private final CarServiceRequestMapper carServiceRequestMapper;
+
+
+    @Override
+    public Optional<Customer> findCustomerByEmail(String email) {
+        return customerJpaRepository.findByEmail(email)
+                .map(customerEntityMapper::mapFromEntity);
     }
 
     @Override
-    public void issueInvoice(CustomerEntity customer) {
-        try (Session session = HibernateUtil.getSession()) {
-            if (Objects.isNull(session)) {
-                throw new RuntimeException("Session is null");
-            }
-            session.beginTransaction();
+    public void issueInvoice(Customer customer) {
+        CustomerEntity toSave = customerEntityMapper.mapToEntity(customer);
+        CustomerEntity saved = customerJpaRepository.save(toSave);
 
-            if (Objects.isNull(customer.getCustomerId())) {
-                session.persist(customer);
-            }
-            customer.getInvoices().stream()
-                    .filter(invoice -> Objects.isNull(invoice.getInvoiceId()))
-                    .forEach(invoice -> {
-                        invoice.setCustomer(customer);
-                        session.persist(invoice);
-                    });
-            session.getTransaction().commit();
-        }
+        customer.getInvoices().stream()
+                .map(invoiceEntityMapper::mapToEntity)
+                .forEach((InvoiceEntity entity) -> {
+                            entity.setCustomer(saved);
+                            invoiceJpaRepository.save(entity);
+                        }
+                );
     }
 
     @Override
-    public void saveServiceRequest(CustomerEntity customer) {
-        try (Session session = HibernateUtil.getSession()) {
-            if (Objects.isNull(session)) {
-                throw new RuntimeException("Session is null");
-            }
-            session.beginTransaction();
-            customer.getCarServiceRequests().stream()
-                    .filter(request -> Objects.isNull(request.getCarServiceRequestId()))
-                    .forEach(session::persist);
+    public void saveServiceRequest(Customer customer) {
+        List<CarServiceRequestEntity> serviceRequests = customer.getCarServiceRequests().stream()
+                .map(carServiceRequestMapper::mapToEntity)
+                .toList();
 
-            session.getTransaction().commit();
-        }
+        serviceRequests
+                .forEach(request -> request.setCustomer(customerEntityMapper.mapToEntity(customer)));
+        carServiceRequestJpaRepository.saveAllAndFlush(serviceRequests);
     }
 
     @Override
-    public CustomerEntity saveCustomer(CustomerEntity entity) {
-        try (Session session = HibernateUtil.getSession()) {
-            if (Objects.isNull(session)) {
-                throw new RuntimeException("Session is null");
-            }
-            session.beginTransaction();
-            session.persist(entity);
-            session.getTransaction().commit();
-            return entity;
-        }
+    public Customer saveCustomer(Customer customer) {
+        CustomerEntity carToServiceEntity = customerEntityMapper.mapToEntity(customer);
+        CustomerEntity saved = customerJpaRepository.save(carToServiceEntity);
+        return customerEntityMapper.mapFromEntity(saved);
     }
 }

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import pl.car_dealership.infrastructure.database.entity.AddressEntity;
 
 @Repository
-public interface AddressJpaRepository extends JpaRepository<AddressEntity, Integer> {
+public interface AddressJpaRepository extends JpaRepository<AddressEntity, Long> {
 
 }

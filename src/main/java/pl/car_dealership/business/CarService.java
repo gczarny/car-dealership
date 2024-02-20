@@ -2,7 +2,6 @@ package pl.car_dealership.business;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pl.car_dealership.business.dao.CarDAO;
 import pl.car_dealership.domain.CarHistory;
 import pl.car_dealership.domain.CarToBuy;
 import pl.car_dealership.domain.CarToService;

@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import pl.car_dealership.infrastructure.database.entity.CarHistoryEntity;
 
 @Repository
-public interface CarHistoryJpaRepository extends JpaRepository<CarHistoryEntity, Integer> {
+public interface CarHistoryJpaRepository extends JpaRepository<CarHistoryEntity, Long> {
 }

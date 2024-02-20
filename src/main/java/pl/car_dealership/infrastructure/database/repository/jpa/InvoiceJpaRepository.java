@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 import pl.car_dealership.infrastructure.database.entity.InvoiceEntity;
 
 @Repository
-public interface InvoiceJpaRepository extends JpaRepository<InvoiceEntity, Integer> {
+public interface InvoiceJpaRepository extends JpaRepository<InvoiceEntity, Long> {
 
 
 }

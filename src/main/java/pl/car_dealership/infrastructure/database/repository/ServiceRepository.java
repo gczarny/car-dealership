@@ -1,42 +1,25 @@
 package pl.car_dealership.infrastructure.database.repository;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.ParameterExpression;
-import jakarta.persistence.criteria.Root;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Repository;
 import pl.car_dealership.business.dao.ServiceDAO;
-import pl.car_dealership.infrastructure.database.entity.ServiceEntity;
+import pl.car_dealership.domain.Service;
+import pl.car_dealership.domain.Service;
+import pl.car_dealership.infrastructure.database.repository.jpa.ServiceJpaRepository;
 
-import java.util.Objects;
 import java.util.Optional;
 
+
+@Repository
+@AllArgsConstructor
 public class ServiceRepository implements ServiceDAO {
+
+    private final ServiceJpaRepository serviceJpaRepository;
+    private final ServiceMapper serviceMapper;
+
     @Override
-    public Optional<ServiceEntity> findByServiceCode(String serviceCode) {
-        try (Session session = HibernateUtil.getSession()) {
-            if (Objects.isNull(session)) {
-                throw new RuntimeException("Session is null");
-            }
-            session.beginTransaction();
-
-            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaQuery<ServiceEntity> criteriaQuery = criteriaBuilder.createQuery(ServiceEntity.class);
-            Root<ServiceEntity> root = criteriaQuery.from(ServiceEntity.class);
-
-            ParameterExpression<String> param1 = criteriaBuilder.parameter(String.class);
-            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("serviceCode"), param1));
-
-            Query<ServiceEntity> query = session.createQuery(criteriaQuery);
-            query.setParameter(param1, serviceCode);
-            try {
-                ServiceEntity singleResult = query.getSingleResult();
-                session.getTransaction().commit();
-                return Optional.of(singleResult);
-            } catch (Throwable ex) {
-                return Optional.empty();
-            }
-        }
+    public Optional<Service> findByServiceCode(String service) {
+        return serviceJpaRepository.findByByServiceCode(service)
+                .map(serviceMapper::mapFromEntity);
     }
 }

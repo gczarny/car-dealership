@@ -1,32 +1,25 @@
 package pl.car_dealership.infrastructure.database.repository;
 
-import org.hibernate.Session;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Repository;
 import pl.car_dealership.business.dao.CarServiceRequestDAO;
-import pl.car_dealership.infrastructure.database.entity.CarServiceRequestEntity;
+import pl.car_dealership.domain.CarServiceRequest;
+import pl.car_dealership.infrastructure.database.repository.jpa.CarServiceRequestJpaRepository;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+@Repository
+@AllArgsConstructor
 public class CarServiceRequestRepository implements CarServiceRequestDAO {
+
+    private final CarServiceRequestJpaRepository carServiceRequestJpaRepository;
+    private final CarServiceRequestEntityMapper carServiceRequestEntityMapper;
     @Override
-    public Set<CarServiceRequestEntity> findActiveServiceRequestsByCarVin(String carVin) {
-        try (Session session = HibernateUtil.getSession()) {
-            if (Objects.isNull(session)) {
-                throw new RuntimeException("Session is null");
-            }
-            session.beginTransaction();
-            String query = """
-                    SELECT sr from CarServiceRequestJpaRepository sr
-                    WHERE sr.car.vin = :vin
-                    AND sr.completedDateTime IS NULL
-                    """;
-            List<CarServiceRequestEntity> result = session.createQuery(query, CarServiceRequestEntity.class)
-                    .setParameter("vin", carVin)
-                    .list();
-            session.getTransaction().commit();
-            return new HashSet<>(result);
-        }
+    public Set<CarServiceRequest> findActiveServiceRequestsByCarVin(String carVin) {
+
+        return carServiceRequestJpaRepository.findActiveServiceRequestsByCarVin(carVin).stream()
+                .map(obj -> carServiceRequestEntityMapper.mapFromEntity(obj))
+                .collect(Collectors.toSet());
     }
 }

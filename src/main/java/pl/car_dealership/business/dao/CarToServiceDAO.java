@@ -1,15 +1,11 @@
 package pl.car_dealership.business.dao;
 
 import pl.car_dealership.domain.CarHistory;
-import pl.car_dealership.domain.CarToBuy;
 import pl.car_dealership.domain.CarToService;
 
 import java.util.Optional;
 
-public interface CarDAO {
-
-
-    Optional<CarToBuy> findCarToBuyByVin(String vin);
+public interface CarToServiceDAO {
 
     Optional<CarToService> findCarToServiceByVin(String vin);
 
