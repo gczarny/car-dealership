@@ -2,7 +2,7 @@ package pl.car_dealership.business;
 
 import lombok.AllArgsConstructor;
 import pl.car_dealership.business.dao.SalesmanDAO;
-import pl.car_dealership.infrastructure.database.entity.SalesmanEntity;
+import pl.car_dealership.domain.Salesman;
 
 import java.util.Optional;
 
@@ -10,8 +10,8 @@ import java.util.Optional;
 public class SalesmanService {
 
     private final SalesmanDAO salesmanDAO;
-    public SalesmanEntity findSalesman(String pesel) {
-        Optional<SalesmanEntity> salesmanByPesel = salesmanDAO.findByPesel(pesel);
+    public Salesman findSalesman(String pesel) {
+        Optional<Salesman> salesmanByPesel = salesmanDAO.findByPesel(pesel);
         if (salesmanByPesel.isEmpty()) {
             throw new RuntimeException("Could not find salesman by pesel: [%s]".formatted(pesel));
         }

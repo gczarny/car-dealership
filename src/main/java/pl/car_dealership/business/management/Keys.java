@@ -10,12 +10,10 @@ public interface Keys {
         DO_THE_SERVICE
     }
 
-    enum Entity {
+    enum Domain {
         SALESMAN,
-        SERVICE,
         MECHANIC,
         CAR,
-        PART,
         CUSTOMER,
     }
 

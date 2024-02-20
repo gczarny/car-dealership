@@ -13,12 +13,12 @@ import java.util.List;
 public class CarHistory {
 
     String carVin;
-    List<ServiceRequest> carServiceRequests;
+    List<CarServiceRequest> carCarServiceRequests;
 
     @Value
     @Builder
     @ToString(of = {"carServiceRequestNumber", "completionDateTime", "customerComment"})
-    public static class ServiceRequest {
+    public static class CarServiceRequest {
         String carServiceRequestNumber;
         OffsetDateTime receivedDateTime;
         OffsetDateTime completionDateTime;

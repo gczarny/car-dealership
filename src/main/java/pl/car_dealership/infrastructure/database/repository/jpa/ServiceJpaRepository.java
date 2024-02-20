@@ -1,8 +1,8 @@
 package pl.car_dealership.infrastructure.database.repository.jpa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import pl.car_dealership.infrastructure.database.entity.ServiceEntity;
 import org.springframework.stereotype.Repository;
+import pl.car_dealership.infrastructure.database.entity.ServiceEntity;
 
 @Repository
 public interface ServiceJpaRepository extends JpaRepository<ServiceEntity, Integer> {

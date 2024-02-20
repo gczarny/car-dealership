@@ -2,7 +2,7 @@ package pl.car_dealership.business;
 
 import lombok.AllArgsConstructor;
 import pl.car_dealership.business.dao.ServiceDAO;
-import pl.car_dealership.infrastructure.database.entity.ServiceEntity;
+import pl.car_dealership.domain.Service;
 
 import java.util.Optional;
 
@@ -11,8 +11,8 @@ public class ServiceCatalogService {
 
     private final ServiceDAO serviceDAO;
 
-    public ServiceEntity findService(String serviceCode) {
-        Optional<ServiceEntity> service = serviceDAO.findByServiceCode(serviceCode);
+    public Service findService(String serviceCode) {
+        Optional<Service> service = serviceDAO.findByServiceCode(serviceCode);
         if (service.isEmpty()) {
             throw new RuntimeException("Could not find service by service code: [%s]".formatted(serviceCode));
         }

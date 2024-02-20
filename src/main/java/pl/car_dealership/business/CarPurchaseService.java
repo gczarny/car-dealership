@@ -3,16 +3,11 @@ package pl.car_dealership.business;
 
 import lombok.AllArgsConstructor;
 import pl.car_dealership.business.management.FileDataPreparationService;
-import pl.car_dealership.business.management.Keys;
-import pl.car_dealership.infrastructure.database.entity.CarToBuyEntity;
-import pl.car_dealership.infrastructure.database.entity.CustomerEntity;
-import pl.car_dealership.infrastructure.database.entity.InvoiceEntity;
-import pl.car_dealership.infrastructure.database.entity.SalesmanEntity;
+import pl.car_dealership.domain.*;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -27,37 +22,37 @@ public class CarPurchaseService {
         var firstTimePurchaseData = fileDataPreparationService.prepareFirstTimePurchaseData();
         var nextTimePurchaseData = fileDataPreparationService.prepareNextTimePurchaseData();
 
-        List<CustomerEntity> firstTimeCustomers = firstTimePurchaseData.stream()
+        List<Customer> firstTimeCustomers = firstTimePurchaseData.stream()
                 .map(this::createFirstTimeToBuyCustomer)
                 .toList();
         firstTimeCustomers.forEach(customerService::issueInvoice);
 
-        List<CustomerEntity> nextTimeCustomers = nextTimePurchaseData.stream()
+        List<Customer> nextTimeCustomers = nextTimePurchaseData.stream()
                 .map(this::createNextTimeToBuyCustomer)
                 .toList();
         nextTimeCustomers.forEach(customerService::issueInvoice);
 
     }
 
-    private CustomerEntity createFirstTimeToBuyCustomer(Map<String, List<String>> inputData) {
-        CarToBuyEntity carToBuy = carService.findCarToBuy(inputData.get(Keys.Entity.CAR.toString()).get(0)); //get VIN
-        SalesmanEntity salesman = salesmanService.findSalesman(inputData.get(Keys.Entity.SALESMAN.toString()).get(0));
-        InvoiceEntity invoice = buildInvoice(carToBuy, salesman);
+    private Customer createFirstTimeToBuyCustomer(CarPurchaseRequestInputData inputData) {
+        CarToBuy carToBuy = carService.findCarToBuy(inputData.getCarVin()); //get VIN
+        Salesman salesman = salesmanService.findSalesman(inputData.getSalesmanPesel());
+        Invoice invoice = buildInvoice(carToBuy, salesman);
 
-        return fileDataPreparationService.buildCustomerEntity(inputData.get(Keys.Entity.CUSTOMER.toString()), invoice);
+        return fileDataPreparationService.buildCustomer(inputData, invoice);
     }
 
-    private CustomerEntity createNextTimeToBuyCustomer(Map<String, List<String>> inputData) {
-        CustomerEntity existingCustomer = customerService.findCustomer(inputData.get(Keys.Entity.CUSTOMER.toString()).get(0));
-        CarToBuyEntity carToBuy = carService.findCarToBuy(inputData.get(Keys.Entity.CAR.toString()).get(0)); //get VIN
-        SalesmanEntity salesman = salesmanService.findSalesman(inputData.get(Keys.Entity.SALESMAN.toString()).get(0));
-        InvoiceEntity invoice = buildInvoice(carToBuy, salesman);
+    private Customer createNextTimeToBuyCustomer(CarPurchaseRequestInputData inputData) {
+        Customer existingCustomer = customerService.findCustomer(inputData.getCustomerEmail());
+        CarToBuy carToBuy = carService.findCarToBuy(inputData.getCarVin()); //get VIN
+        Salesman salesman = salesmanService.findSalesman(inputData.getSalesmanPesel());
+        Invoice invoice = buildInvoice(carToBuy, salesman);
         existingCustomer.getInvoices().add(invoice);
         return existingCustomer;
     }
 
-    private InvoiceEntity buildInvoice(CarToBuyEntity carToBuy, SalesmanEntity salesman) {
-        return InvoiceEntity.builder()
+    private Invoice buildInvoice(CarToBuy carToBuy, Salesman salesman) {
+        return Invoice.builder()
                 .invoiceNumber(UUID.randomUUID().toString())
                 .dateTime(OffsetDateTime.now(ZoneOffset.UTC))
                 .car(carToBuy)

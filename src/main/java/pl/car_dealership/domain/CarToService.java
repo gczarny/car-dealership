@@ -2,6 +2,7 @@ package pl.car_dealership.domain;
 
 import lombok.*;
 
+import java.util.Objects;
 import java.util.Set;
 
 @With
@@ -17,4 +18,11 @@ public class CarToService {
     String model;
     Integer year;
     Set<CarServiceRequest> carServiceRequestEntities;
+
+    public Boolean carBoughtHere() {
+        return Objects.nonNull(vin)
+            && Objects.isNull(brand)
+            && Objects.isNull(model)
+            && Objects.isNull(year);
+    }
 }

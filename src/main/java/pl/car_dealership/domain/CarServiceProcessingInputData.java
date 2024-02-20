@@ -9,14 +9,12 @@ import lombok.With;
 @Builder
 public class CarServiceProcessingInputData {
 
-    String customerName;
-    String customerSurname;
-    String customerPhone;
-    String customerEmail;
-    String customerAddressCountry;
-    String customerAddressCity;
-    String customerAddressPostalCode;
-    String customerAddressStreet;
+    String mechanicPesel;
     String carVin;
-    String salesmanPesel;
+    String partSerialNumber;
+    Integer partQuantity;
+    String serviceCode;
+    Integer hours;
+    String comment;
+    String done;
 }
