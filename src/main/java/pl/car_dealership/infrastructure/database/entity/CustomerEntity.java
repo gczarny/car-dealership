@@ -31,7 +31,7 @@ public class CustomerEntity {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email")
     private String email;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -43,4 +43,5 @@ public class CustomerEntity {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer")
     private Set<CarServiceRequestEntity> carServiceRequests;
+
 }

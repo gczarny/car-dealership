@@ -5,7 +5,8 @@ import pl.car_dealership.domain.Customer;
 import java.util.Optional;
 
 public interface CustomerDAO {
-    Optional<Customer> findCustomerByEmail(String email);
+
+    Optional<Customer> findByEmail(String email);
 
     void issueInvoice(Customer customer);
 

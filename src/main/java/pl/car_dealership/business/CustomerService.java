@@ -1,13 +1,14 @@
 package pl.car_dealership.business;
 
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.car_dealership.business.dao.CustomerDAO;
-import pl.car_dealership.domain.Address;
 import pl.car_dealership.domain.Customer;
 
 import java.util.Optional;
 
+@Service
 @AllArgsConstructor
 public class CustomerService {
 
@@ -18,13 +19,13 @@ public class CustomerService {
         customerDAO.issueInvoice(customer);
     }
 
+    @Transactional
     public Customer findCustomer(String email) {
-
-        Optional<Customer> customerByEmail = customerDAO.findCustomerByEmail(email);
-        if (customerByEmail.isEmpty()) {
+        Optional<Customer> customer = customerDAO.findByEmail(email);
+        if (customer.isEmpty()) {
             throw new RuntimeException("Could not find customer by email: [%s]".formatted(email));
         }
-        return customerByEmail.get();
+        return customer.get();
     }
 
     @Transactional

@@ -4,7 +4,6 @@ values ('Stefan', 'Sprzedawca', '67020499436'),
        ('Tomasz', 'Kombi', '55091699846'),
        ('Rafał', 'Dach', '62081825675');
 
-
 insert into MECHANIC(name, surname, pesel)
 values ('Robert', 'Śrubokręt', '52070997836'),
        ('Zygmunt', 'Naprawa', '83011863727'),

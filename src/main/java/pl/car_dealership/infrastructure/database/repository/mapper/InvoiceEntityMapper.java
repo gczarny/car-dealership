@@ -8,5 +8,7 @@ import pl.car_dealership.infrastructure.database.entity.InvoiceEntity;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface InvoiceEntityMapper {
+
+
     InvoiceEntity mapToEntity(Invoice invoice);
 }

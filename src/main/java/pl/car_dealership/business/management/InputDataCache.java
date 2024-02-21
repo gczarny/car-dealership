@@ -32,7 +32,9 @@ public class InputDataCache {
                 .filter(line -> !line.startsWith("[//]: #"))
                 .filter(line -> !line.isBlank())
                 .toList();
-        return lines.stream().collect(Collectors.groupingBy(
+
+        return lines.stream()
+                .collect(Collectors.groupingBy(
                         line -> line.split("->")[0].trim(),
                         Collectors.mapping(
                                 line -> line.substring(line.indexOf("->") + 2).trim(),

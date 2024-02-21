@@ -19,4 +19,5 @@ public class CarPurchaseRequestInputData {
     String customerAddressStreet;
     String carVin;
     String salesmanPesel;
+
 }

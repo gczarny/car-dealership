@@ -1,4 +1,4 @@
-package pl.car_dealership.infrastructure;
+package pl.car_dealership;
 
 public interface ComponentScanMarker {
 }

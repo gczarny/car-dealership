@@ -19,7 +19,7 @@ public class PartRepository implements PartDAO {
 
     @Override
     public Optional<Part> findBySerialNumber(String serialNumber) {
-        return partJpaRepository.findByBySerialNumber(serialNumber)
+        return partJpaRepository.findBySerialNumber(serialNumber)
                 .map(partEntityMapper::mapFromEntity);
     }
 }

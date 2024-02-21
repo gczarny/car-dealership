@@ -5,7 +5,6 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
-
 @Getter
 @Setter
 @EqualsAndHashCode(of = "carToBuyId")

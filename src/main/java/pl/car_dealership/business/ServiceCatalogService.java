@@ -7,6 +7,7 @@ import pl.car_dealership.domain.Service;
 
 import java.util.Optional;
 
+@org.springframework.stereotype.Service
 @AllArgsConstructor
 public class ServiceCatalogService {
 

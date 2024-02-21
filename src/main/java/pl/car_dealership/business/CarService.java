@@ -2,6 +2,7 @@ package pl.car_dealership.business;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.car_dealership.business.dao.CarToBuyDAO;
 import pl.car_dealership.business.dao.CarToServiceDAO;
@@ -12,12 +13,14 @@ import pl.car_dealership.domain.CarToService;
 import java.util.Optional;
 
 @Slf4j
+@Service
 @AllArgsConstructor
 public class CarService {
 
     private final CarToBuyDAO carToBuyDAO;
     private final CarToServiceDAO carToServiceDAO;
 
+    @Transactional
     public CarToBuy findCarToBuy(String vin) {
         Optional<CarToBuy> carToBuyByVin = carToBuyDAO.findCarToBuyByVin(vin);
         if (carToBuyByVin.isEmpty()) {
@@ -34,11 +37,11 @@ public class CarService {
     @Transactional
     public CarToService saveCarToService(CarToBuy carToBuy) {
         CarToService carToService = CarToService.builder()
-                .vin(carToBuy.getVin())
-                .brand(carToBuy.getBrand())
-                .model(carToBuy.getModel())
-                .year(carToBuy.getYear())
-                .build();
+            .vin(carToBuy.getVin())
+            .brand(carToBuy.getBrand())
+            .model(carToBuy.getModel())
+            .year(carToBuy.getYear())
+            .build();
         return carToServiceDAO.saveCarToService(carToService);
     }
 
@@ -49,13 +52,13 @@ public class CarService {
 
     public void printCarHistory(String vin) {
         CarHistory carHistoryByVin = carToServiceDAO.findCarHistoryByVin(vin);
-        log.info("### CAR HISTORY FOR VIN: [{}] ###",vin);
+        log.info("###CAR HISTORY FOR VIN: [{}]", vin);
         carHistoryByVin.getCarServiceRequests().forEach(this::printServiceRequest);
     }
 
     private void printServiceRequest(CarHistory.CarServiceRequest serviceRequest) {
-        log.info("##### SERVICE REQUEST: [{}] #####", serviceRequest);
-        serviceRequest.getServices().forEach(service -> log.info("### SERVICE: [{}] ###", service));
-        serviceRequest.getParts().forEach(part -> log.info("### PART: [{}] ###", part));
+        log.info("###SERVICE REQUEST: [{}]", serviceRequest);
+        serviceRequest.getServices().forEach(service -> log.info("###SERVICE: [{}]", service));
+        serviceRequest.getParts().forEach(part -> log.info("###PART: [{}]", part));
     }
 }

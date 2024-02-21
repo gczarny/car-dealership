@@ -27,7 +27,7 @@ public class MechanicEntity {
     @Column(name = "surname")
     private String surname;
 
-    @Column(name = "pesel", unique = true)
+    @Column(name = "pesel")
     private String pesel;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "mechanic")

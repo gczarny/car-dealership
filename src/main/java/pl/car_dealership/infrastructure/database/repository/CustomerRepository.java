@@ -6,15 +6,15 @@ import pl.car_dealership.business.dao.CustomerDAO;
 import pl.car_dealership.domain.Customer;
 import pl.car_dealership.infrastructure.database.entity.CarServiceRequestEntity;
 import pl.car_dealership.infrastructure.database.entity.CustomerEntity;
-import pl.car_dealership.infrastructure.database.entity.InvoiceEntity;
 import pl.car_dealership.infrastructure.database.repository.jpa.CarServiceRequestJpaRepository;
 import pl.car_dealership.infrastructure.database.repository.jpa.CustomerJpaRepository;
 import pl.car_dealership.infrastructure.database.repository.jpa.InvoiceJpaRepository;
-import pl.car_dealership.infrastructure.database.repository.mapper.CarServiceRequestMapper;
+import pl.car_dealership.infrastructure.database.repository.mapper.CarServiceRequestEntityMapper;
 import pl.car_dealership.infrastructure.database.repository.mapper.CustomerEntityMapper;
 import pl.car_dealership.infrastructure.database.repository.mapper.InvoiceEntityMapper;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 
@@ -27,44 +27,45 @@ public class CustomerRepository implements CustomerDAO {
     private final CarServiceRequestJpaRepository carServiceRequestJpaRepository;
     private final CustomerEntityMapper customerEntityMapper;
     private final InvoiceEntityMapper invoiceEntityMapper;
-    private final CarServiceRequestMapper carServiceRequestMapper;
+    private final CarServiceRequestEntityMapper carServiceRequestEntityMapper;
 
 
     @Override
-    public Optional<Customer> findCustomerByEmail(String email) {
+    public Optional<Customer> findByEmail(String email) {
         return customerJpaRepository.findByEmail(email)
                 .map(customerEntityMapper::mapFromEntity);
     }
 
     @Override
     public void issueInvoice(Customer customer) {
-        CustomerEntity toSave = customerEntityMapper.mapToEntity(customer);
-        CustomerEntity saved = customerJpaRepository.save(toSave);
+        CustomerEntity customerToSave = customerEntityMapper.mapToEntity(customer);
+        CustomerEntity customerSaved = customerJpaRepository.saveAndFlush(customerToSave);
 
         customer.getInvoices().stream()
-                .map(invoiceEntityMapper::mapToEntity)
-                .forEach((InvoiceEntity entity) -> {
-                            entity.setCustomer(saved);
-                            invoiceJpaRepository.save(entity);
-                        }
-                );
+            .filter(invoice -> Objects.isNull(invoice.getInvoiceId()))
+            .map(invoiceEntityMapper::mapToEntity)
+            .forEach(invoiceEntity -> {
+                invoiceEntity.setCustomer(customerSaved);
+                invoiceJpaRepository.saveAndFlush(invoiceEntity);
+            });
     }
 
     @Override
     public void saveServiceRequest(Customer customer) {
         List<CarServiceRequestEntity> serviceRequests = customer.getCarServiceRequests().stream()
-                .map(carServiceRequestMapper::mapToEntity)
-                .toList();
+            .filter(serviceRequest -> Objects.isNull(serviceRequest.getCarServiceRequestId()))
+            .map(carServiceRequestEntityMapper::mapToEntity)
+            .toList();
 
         serviceRequests
-                .forEach(request -> request.setCustomer(customerEntityMapper.mapToEntity(customer)));
+            .forEach(request -> request.setCustomer(customerEntityMapper.mapToEntity(customer)));
         carServiceRequestJpaRepository.saveAllAndFlush(serviceRequests);
     }
 
     @Override
     public Customer saveCustomer(Customer customer) {
-        CustomerEntity carToServiceEntity = customerEntityMapper.mapToEntity(customer);
-        CustomerEntity saved = customerJpaRepository.save(carToServiceEntity);
+        CustomerEntity toSave = customerEntityMapper.mapToEntity(customer);
+        CustomerEntity saved = customerJpaRepository.save(toSave);
         return customerEntityMapper.mapFromEntity(saved);
     }
 }

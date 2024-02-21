@@ -26,7 +26,7 @@ public interface CarToServiceEntityMapper {
                 .map(request -> CarHistory.CarServiceRequest.builder()
                         .carServiceRequestNumber(request.getCarServiceRequestNumber())
                         .receivedDateTime(request.getReceivedDateTime())
-                        .completionDateTime(request.getCompletedDateTime())
+                        .completedDateTime(request.getCompletedDateTime())
                         .customerComment(request.getCustomerComment())
                         .services(request.getServiceMechanics().stream()
                                 .map(ServiceMechanicEntity::getService)

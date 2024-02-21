@@ -48,5 +48,4 @@ public class CarServiceRequestEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "carServiceRequest")
     private Set<ServicePartEntity> serviceParts;
-
 }

@@ -4,6 +4,6 @@ create table service
     service_code VARCHAR(32)    not NULL,
     description  VARCHAR(64)    not NULL,
     price        NUMERIC(19, 2) not NULL,
-    primary key (service_id)
+    primary key (service_id),
     unique(service_code)
 );

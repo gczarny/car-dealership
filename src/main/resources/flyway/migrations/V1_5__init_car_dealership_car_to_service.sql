@@ -5,7 +5,6 @@ create table car_to_service
     brand             VARCHAR(32) not NULL,
     model             VARCHAR(32) not NULL,
     year              SMALLINT    not NULL,
-    color             VARCHAR(32) not NULL,
     primary key (car_to_service_id),
     unique (vin)
 );

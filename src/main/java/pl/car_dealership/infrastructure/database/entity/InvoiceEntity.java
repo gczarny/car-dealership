@@ -22,7 +22,7 @@ public class InvoiceEntity {
     @Column(name = "invoice_id")
     private Long invoiceId;
 
-    @Column(name = "invoice_number", unique = true)
+    @Column(name = "invoice_number")
     private String invoiceNumber;
 
     @Column(name = "date_time")

@@ -9,7 +9,7 @@ public interface CarToServiceDAO {
 
     Optional<CarToService> findCarToServiceByVin(String vin);
 
-    CarToService saveCarToService(CarToService carToService);
+    CarToService saveCarToService(CarToService car);
 
     CarHistory findCarHistoryByVin(String vin);
 }

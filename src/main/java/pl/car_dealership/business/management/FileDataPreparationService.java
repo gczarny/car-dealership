@@ -12,38 +12,38 @@ public class FileDataPreparationService {
 
     public List<CarPurchaseRequestInputData> prepareFirstTimePurchaseData() {
         return InputDataCache.getInputData(Keys.InputDataGroup.BUY_FIRST_TIME, this::prepareMap).stream()
-                .map(this::prepareFirstTimePurchaseData)
-                .toList();
+            .map(this::prepareFirstTimePurchaseData)
+            .toList();
     }
 
     private CarPurchaseRequestInputData prepareFirstTimePurchaseData(Map<String, List<String>> inputData) {
         List<String> customerData = inputData.get(Keys.Domain.CUSTOMER.toString());
         return CarPurchaseRequestInputData.builder()
-                .customerName(customerData.get(0))
-                .customerSurname(customerData.get(1))
-                .customerPhone(customerData.get(2))
-                .customerEmail(customerData.get(3))
-                .customerAddressCountry(customerData.get(4))
-                .customerAddressCity(customerData.get(5))
-                .customerAddressPostalCode(customerData.get(6))
-                .customerAddressStreet(customerData.get(7))
-                .carVin(inputData.get(Keys.Domain.CAR.toString()).get(0))
-                .salesmanPesel(inputData.get(Keys.Domain.SALESMAN.toString()).get(0))
-                .build();
+            .customerName(customerData.get(0))
+            .customerSurname(customerData.get(1))
+            .customerPhone(customerData.get(2))
+            .customerEmail(customerData.get(3))
+            .customerAddressCountry(customerData.get(4))
+            .customerAddressCity(customerData.get(5))
+            .customerAddressPostalCode(customerData.get(6))
+            .customerAddressStreet(customerData.get(7))
+            .carVin(inputData.get(Keys.Domain.CAR.toString()).get(0))
+            .salesmanPesel(inputData.get(Keys.Domain.SALESMAN.toString()).get(0))
+            .build();
     }
 
     public List<CarPurchaseRequestInputData> prepareNextTimePurchaseData() {
         return InputDataCache.getInputData(Keys.InputDataGroup.BUY_AGAIN, this::prepareMap).stream()
-                .map(this::prepareNextTimePurchaseData)
-                .toList();
+            .map(this::prepareNextTimePurchaseData)
+            .toList();
     }
 
     private CarPurchaseRequestInputData prepareNextTimePurchaseData(Map<String, List<String>> inputData) {
         return CarPurchaseRequestInputData.builder()
-                .customerEmail(inputData.get(Keys.Domain.CUSTOMER.toString()).get(0))
-                .carVin(inputData.get(Keys.Domain.CAR.toString()).get(0))
-                .salesmanPesel(inputData.get(Keys.Domain.SALESMAN.toString()).get(0))
-                .build();
+            .customerEmail(inputData.get(Keys.Domain.CUSTOMER.toString()).get(0))
+            .carVin(inputData.get(Keys.Domain.CAR.toString()).get(0))
+            .salesmanPesel(inputData.get(Keys.Domain.SALESMAN.toString()).get(0))
+            .build();
     }
 
     public Customer buildCustomer(CarPurchaseRequestInputData inputData, Invoice invoice) {
@@ -55,7 +55,7 @@ public class FileDataPreparationService {
                 .address(Address.builder()
                         .country(inputData.getCustomerAddressCountry())
                         .city(inputData.getCustomerAddressCity())
-                        .postalCode(inputData.getCustomerPhone())
+                        .postalCode(inputData.getCustomerAddressPostalCode())
                         .address(inputData.getCustomerAddressStreet())
                         .build())
                 .invoices(Set.of(invoice))

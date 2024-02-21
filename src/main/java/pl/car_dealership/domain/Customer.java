@@ -3,12 +3,14 @@ package pl.car_dealership.domain;
 
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @With
 @Value
 @Builder
-@EqualsAndHashCode(of = "customerId")
+@EqualsAndHashCode(of = "email")
 @ToString(of = {"customerId", "name", "surname", "email"})
 public class Customer {
     Long customerId;
@@ -20,4 +22,11 @@ public class Customer {
     Set<Invoice> invoices;
     Set<CarServiceRequest> carServiceRequests;
 
+    public Set<Invoice> getInvoices() {
+        return Objects.isNull(invoices) ? new HashSet<>() : invoices;
+    }
+
+    public Set<CarServiceRequest> getCarServiceRequests() {
+        return Objects.isNull(carServiceRequests) ? new HashSet<>() : carServiceRequests;
+    }
 }

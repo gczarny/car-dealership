@@ -1,6 +1,5 @@
 package pl.car_dealership.domain;
 
-
 import lombok.*;
 
 import java.time.OffsetDateTime;
@@ -8,7 +7,7 @@ import java.time.OffsetDateTime;
 @With
 @Value
 @Builder
-@EqualsAndHashCode(of = "invoiceId")
+@EqualsAndHashCode(of = "invoiceNumber")
 @ToString(of = {"invoiceId", "invoiceNumber", "dateTime"})
 public class Invoice {
 
