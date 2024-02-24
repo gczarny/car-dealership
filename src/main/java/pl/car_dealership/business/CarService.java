@@ -10,6 +10,7 @@ import pl.car_dealership.domain.CarHistory;
 import pl.car_dealership.domain.CarToBuy;
 import pl.car_dealership.domain.CarToService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -21,6 +22,13 @@ public class CarService {
     private final CarToServiceDAO carToServiceDAO;
 
     @Transactional
+    public List<CarToBuy> findAvailableCars() {
+        List<CarToBuy> availableCars = carToBuyDAO.findAvailableCars();
+        log.info("Available cars: [{}]", availableCars);
+        return availableCars;
+    }
+
+/*    @Transactional
     public CarToBuy findCarToBuy(String vin) {
         Optional<CarToBuy> carToBuyByVin = carToBuyDAO.findCarToBuyByVin(vin);
         if (carToBuyByVin.isEmpty()) {
@@ -60,5 +68,6 @@ public class CarService {
         log.info("###SERVICE REQUEST: [{}]", serviceRequest);
         serviceRequest.getServices().forEach(service -> log.info("###SERVICE: [{}]", service));
         serviceRequest.getParts().forEach(part -> log.info("###PART: [{}]", part));
-    }
+    }*/
+
 }

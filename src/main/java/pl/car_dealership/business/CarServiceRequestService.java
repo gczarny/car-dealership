@@ -5,29 +5,28 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.car_dealership.business.dao.CarServiceRequestDAO;
 import pl.car_dealership.business.management.FileDataPreparationService;
-import pl.car_dealership.domain.CarServiceRequest;
-import pl.car_dealership.domain.CarToBuy;
-import pl.car_dealership.domain.CarToService;
-import pl.car_dealership.domain.Customer;
+import pl.car_dealership.domain.*;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class CarServiceRequestService {
 
-    private final FileDataPreparationService fileDataPreparationService;
-    private final CarService carService;
-    private final CustomerService customerService;
-    private final CarServiceRequestDAO carServiceRequestDAO;
+    //private final FileDataPreparationService fileDataPreparationService;
+//    private final CarService carService;
+//    private final CustomerService customerService;
+//    private final CarServiceRequestDAO carServiceRequestDAO;
+    private final MechanicService mechanicService;
 
-    public void requestService() {
+    public List<Mechanic> availableMechanics() {
+        return mechanicService.findAvailable();
+    }
+
+/*    public void requestService() {
         Map<Boolean, List<CarServiceRequest>> serviceRequests = fileDataPreparationService.createCarServiceRequests().stream()
             .collect(Collectors.groupingBy(element -> element.getCar().carBoughtHere()));
 
@@ -103,5 +102,5 @@ public class CarServiceRequestService {
         return serviceRequests.stream()
             .findAny()
             .orElseThrow(() -> new RuntimeException("Could not find any service requests, car vin: [%s]".formatted(carVin)));
-    }
+    }*/
 }

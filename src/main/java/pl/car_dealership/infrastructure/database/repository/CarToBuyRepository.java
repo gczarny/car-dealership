@@ -7,6 +7,7 @@ import pl.car_dealership.domain.CarToBuy;
 import pl.car_dealership.infrastructure.database.repository.jpa.CarToBuyJpaRepository;
 import pl.car_dealership.infrastructure.database.repository.mapper.CarToBuyEntityMapper;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -16,6 +17,13 @@ public class CarToBuyRepository implements CarToBuyDAO {
 
     private final CarToBuyJpaRepository carToBuyJpaRepository;
     private final CarToBuyEntityMapper carToBuyEntityMapper;
+
+    @Override
+    public List<CarToBuy> findAvailableCars() {
+        return carToBuyJpaRepository.findAvailableCars().stream()
+                .map(carToBuyEntityMapper::mapFromEntity) //entity to domain
+                .toList();
+    }
 
     @Override
     public Optional<CarToBuy> findCarToBuyByVin(String vin) {

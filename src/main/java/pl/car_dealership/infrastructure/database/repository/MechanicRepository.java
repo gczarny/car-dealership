@@ -7,6 +7,7 @@ import pl.car_dealership.domain.Mechanic;
 import pl.car_dealership.infrastructure.database.repository.jpa.MechanicJpaRepository;
 import pl.car_dealership.infrastructure.database.repository.mapper.MechanicEntityMapper;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -16,6 +17,13 @@ public class MechanicRepository implements MechanicDAO {
 
     private final MechanicJpaRepository mechanicJpaRepository;
     private final MechanicEntityMapper mechanicEntityMapper;
+
+    @Override
+    public List<Mechanic> findAvailable() {
+        return mechanicJpaRepository.findAll().stream()
+                .map(mechanicEntityMapper::mapFromEntity)
+                .toList();
+    }
 
     @Override
     public Optional<Mechanic> findByPesel(String pesel) {

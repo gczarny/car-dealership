@@ -15,7 +15,7 @@ import java.util.Objects;
 @AllArgsConstructor
 public class CarServiceProcessingService {
 
-    private final FileDataPreparationService fileDataPreparationService;
+/*    private final FileDataPreparationService fileDataPreparationService;
     private final MechanicService mechanicService;
     private final CarService carService;
     private final ServiceCatalogService serviceCatalogService;
@@ -75,5 +75,5 @@ public class CarServiceProcessingService {
             .carServiceRequest(serviceRequest)
             .part(part)
             .build();
-    }
+    }*/
 }

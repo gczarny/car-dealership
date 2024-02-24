@@ -16,12 +16,20 @@ import java.util.UUID;
 @AllArgsConstructor
 public class CarPurchaseService {
 
-    private final FileDataPreparationService fileDataPreparationService;
+    //private final FileDataPreparationService fileDataPreparationService;
     private final CustomerService customerService;
     private final CarService carService;
     private final SalesmanService salesmanService;
 
-    public void purchase() {
+    public List<Salesman> availableSalesman() {
+        return salesmanService.findAvailable();
+    }
+
+    public List<CarToBuy> availableCars() {
+        return carService.findAvailableCars();
+    }
+
+/*    public void purchase() {
         var firstTimeData = fileDataPreparationService.prepareFirstTimePurchaseData();
         var nextTimeData = fileDataPreparationService.prepareNextTimePurchaseData();
 
@@ -62,5 +70,6 @@ public class CarPurchaseService {
             .car(car)
             .salesman(salesman)
             .build();
-    }
+    }*/
+
 }
