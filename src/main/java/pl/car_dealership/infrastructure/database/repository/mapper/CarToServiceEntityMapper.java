@@ -22,7 +22,9 @@ public interface CarToServiceEntityMapper {
     CarToService mapFromEntity(CarToServiceEntity entity);
 
     default CarHistory mapFromEntity(String vin, CarToServiceEntity entity) {
-        return CarHistory.builder().carVin(vin).carServiceRequests(entity.getCarServiceRequests().stream()
+        return CarHistory.builder()
+                .carVin(vin)
+                .carServiceRequests(entity.getCarServiceRequests().stream()
                 .map(request -> CarHistory.CarServiceRequest.builder()
                         .carServiceRequestNumber(request.getCarServiceRequestNumber())
                         .receivedDateTime(request.getReceivedDateTime())

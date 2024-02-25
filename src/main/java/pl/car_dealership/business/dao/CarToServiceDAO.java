@@ -3,6 +3,7 @@ package pl.car_dealership.business.dao;
 import pl.car_dealership.domain.CarHistory;
 import pl.car_dealership.domain.CarToService;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CarToServiceDAO {
@@ -12,4 +13,6 @@ public interface CarToServiceDAO {
     CarToService saveCarToService(CarToService car);
 
     CarHistory findCarHistoryByVin(String vin);
+
+    List<CarToService> findAll();
 }

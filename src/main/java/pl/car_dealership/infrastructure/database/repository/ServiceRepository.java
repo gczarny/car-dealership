@@ -7,6 +7,7 @@ import pl.car_dealership.domain.Service;
 import pl.car_dealership.infrastructure.database.repository.jpa.ServiceJpaRepository;
 import pl.car_dealership.infrastructure.database.repository.mapper.ServiceEntityMapper;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -21,5 +22,12 @@ public class ServiceRepository implements ServiceDAO {
     public Optional<Service> findByServiceCode(String service) {
         return serviceJpaRepository.findByServiceCode(service)
                 .map(serviceEntityMapper::mapFromEntity);
+    }
+
+    @Override
+    public List<Service> findAll() {
+        return serviceJpaRepository.findAll().stream()
+                .map(serviceEntityMapper::mapFromEntity)
+                .toList();
     }
 }

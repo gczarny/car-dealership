@@ -22,5 +22,4 @@ public class CarServiceRequest {
     CarToService car;
     Set<ServiceMechanic> serviceMechanics;
     Set<ServicePart> serviceParts;
-
 }

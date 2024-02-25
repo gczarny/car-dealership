@@ -19,7 +19,7 @@ public class CarToBuyRepository implements CarToBuyDAO {
     private final CarToBuyEntityMapper carToBuyEntityMapper;
 
     @Override
-    public List<CarToBuy> findAvailableCars() {
+    public List<CarToBuy> findAvailable() {
         return carToBuyJpaRepository.findAvailableCars().stream()
                 .map(carToBuyEntityMapper::mapFromEntity) //entity to domain
                 .toList();
@@ -28,6 +28,6 @@ public class CarToBuyRepository implements CarToBuyDAO {
     @Override
     public Optional<CarToBuy> findCarToBuyByVin(String vin) {
         return carToBuyJpaRepository.findByVin(vin)
-                .map(carToBuyEntityMapper::mapFromEntity);
+            .map(carToBuyEntityMapper::mapFromEntity);
     }
 }

@@ -123,7 +123,7 @@ public class ApplicationConfiguration implements WebMvcConfigurer, ApplicationCo
     @Bean //ustawiamy tu thymeleaf
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
-        templateResolver.setApplicationContext(applicationContext);
+        templateResolver.setApplicationContext(this.applicationContext);
         templateResolver.setPrefix("/WEB-INF/templates/");
         templateResolver.setSuffix(".html");
         templateResolver.setCharacterEncoding(StandardCharsets.UTF_8.name());

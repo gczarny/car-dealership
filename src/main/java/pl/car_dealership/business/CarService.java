@@ -9,6 +9,7 @@ import pl.car_dealership.business.dao.CarToServiceDAO;
 import pl.car_dealership.domain.CarHistory;
 import pl.car_dealership.domain.CarToBuy;
 import pl.car_dealership.domain.CarToService;
+import pl.car_dealership.domain.exception.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,16 +24,16 @@ public class CarService {
 
     @Transactional
     public List<CarToBuy> findAvailableCars() {
-        List<CarToBuy> availableCars = carToBuyDAO.findAvailableCars();
-        log.info("Available cars: [{}]", availableCars);
+        List<CarToBuy> availableCars = carToBuyDAO.findAvailable();
+        log.info("Available cars: [{}]", availableCars.size());
         return availableCars;
     }
 
-/*    @Transactional
+   @Transactional
     public CarToBuy findCarToBuy(String vin) {
         Optional<CarToBuy> carToBuyByVin = carToBuyDAO.findCarToBuyByVin(vin);
         if (carToBuyByVin.isEmpty()) {
-            throw new RuntimeException("Could not find car by vin: [%s]".formatted(vin));
+            throw new NotFoundException("Could not find car by vin: [%s]".formatted(vin));
         }
         return carToBuyByVin.get();
     }
@@ -45,11 +46,11 @@ public class CarService {
     @Transactional
     public CarToService saveCarToService(CarToBuy carToBuy) {
         CarToService carToService = CarToService.builder()
-            .vin(carToBuy.getVin())
-            .brand(carToBuy.getBrand())
-            .model(carToBuy.getModel())
-            .year(carToBuy.getYear())
-            .build();
+                .vin(carToBuy.getVin())
+                .brand(carToBuy.getBrand())
+                .model(carToBuy.getModel())
+                .year(carToBuy.getYear())
+                .build();
         return carToServiceDAO.saveCarToService(carToService);
     }
 
@@ -58,16 +59,13 @@ public class CarService {
         return carToServiceDAO.saveCarToService(car);
     }
 
-    public void printCarHistory(String vin) {
-        CarHistory carHistoryByVin = carToServiceDAO.findCarHistoryByVin(vin);
-        log.info("###CAR HISTORY FOR VIN: [{}]", vin);
-        carHistoryByVin.getCarServiceRequests().forEach(this::printServiceRequest);
+    public List<CarToService> findAllCarsWithHistory() {
+        List<CarToService> allCars = carToServiceDAO.findAll();
+        log.info("Cars to show history: [{}]", allCars.size());
+        return allCars;
     }
 
-    private void printServiceRequest(CarHistory.CarServiceRequest serviceRequest) {
-        log.info("###SERVICE REQUEST: [{}]", serviceRequest);
-        serviceRequest.getServices().forEach(service -> log.info("###SERVICE: [{}]", service));
-        serviceRequest.getParts().forEach(part -> log.info("###PART: [{}]", part));
-    }*/
-
+    public CarHistory findCarHistoryByVin(String carVin) {
+        return carToServiceDAO.findCarHistoryByVin(carVin);
+    }
 }

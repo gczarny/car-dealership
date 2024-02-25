@@ -3,6 +3,7 @@ package pl.car_dealership.infrastructure.database.repository;
 import lombok.AllArgsConstructor;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import pl.car_dealership.business.dao.ServiceRequestProcessingDAO;
 import pl.car_dealership.domain.CarServiceRequest;
 import pl.car_dealership.domain.ServiceMechanic;
@@ -33,6 +34,7 @@ public class ServiceRequestProcessingRepository implements ServiceRequestProcess
     private final ServicePartEntityMapper servicePartEntityMapper;
 
     @Override
+    @Transactional
     public void process(CarServiceRequest serviceRequest, ServiceMechanic serviceMechanic) {
         ServiceMechanicEntity serviceMechanicEntity = serviceMechanicEntityMapper.mapToEntity(serviceMechanic);
         serviceMechanicJpaRepository.saveAndFlush(serviceMechanicEntity);
@@ -46,6 +48,7 @@ public class ServiceRequestProcessingRepository implements ServiceRequestProcess
     }
 
     @Override
+    @Transactional
     public void process(
             CarServiceRequest serviceRequest,
             ServiceMechanic serviceMechanic,

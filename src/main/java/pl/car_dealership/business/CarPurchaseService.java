@@ -3,7 +3,7 @@ package pl.car_dealership.business;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.car_dealership.business.management.FileDataPreparationService;
+import org.springframework.transaction.annotation.Transactional;
 import pl.car_dealership.domain.*;
 
 import java.time.OffsetDateTime;
@@ -29,47 +29,58 @@ public class CarPurchaseService {
         return carService.findAvailableCars();
     }
 
-/*    public void purchase() {
-        var firstTimeData = fileDataPreparationService.prepareFirstTimePurchaseData();
-        var nextTimeData = fileDataPreparationService.prepareNextTimePurchaseData();
-
-        List<Customer> firstTimeCustomers = firstTimeData.stream()
-            .map(this::createFirstTimeToBuyCustomer)
-            .toList();
-        firstTimeCustomers.forEach(customerService::issueInvoice);
-
-        List<Customer> nextTimeCustomers = nextTimeData.stream()
-            .map(this::createNextTimeToBuyCustomer)
-            .toList();
-        nextTimeCustomers.forEach(customerService::issueInvoice);
+    @Transactional
+    public Invoice purchase(final CarPurchaseRequest request) {
+        return request.getExistingCustomerEmail().isBlank()
+        ? processFirstTimeToBuyCustomer(request)
+        : processNextTimeToBuyCustomer(request);
 
     }
 
-    private Customer createFirstTimeToBuyCustomer(CarPurchaseRequestInputData inputData) {
-        CarToBuy car = carService.findCarToBuy(inputData.getCarVin());
-        Salesman salesman = salesmanService.findSalesman(inputData.getSalesmanPesel());
+    private Invoice processFirstTimeToBuyCustomer(CarPurchaseRequest request) {
+        CarToBuy car = carService.findCarToBuy(request.getCarVin());
+        Salesman salesman = salesmanService.findSalesman(request.getSalesmanPesel());
         Invoice invoice = buildInvoice(car, salesman);
 
-        return fileDataPreparationService.buildCustomer(inputData, invoice);
+        Customer customer = buildCustomer(request, invoice);
+        customerService.issueInvoice(customer);
+        return invoice;
     }
 
-    private Customer createNextTimeToBuyCustomer(CarPurchaseRequestInputData inputData) {
-        Customer existingCustomer = customerService.findCustomer(inputData.getCustomerEmail());
-        CarToBuy car = carService.findCarToBuy(inputData.getCarVin());
-        Salesman salesman = salesmanService.findSalesman(inputData.getSalesmanPesel());
+    private Invoice processNextTimeToBuyCustomer(CarPurchaseRequest request) {
+        Customer existingCustomer = customerService.findCustomer(request.getExistingCustomerEmail());
+        CarToBuy car = carService.findCarToBuy(request.getCarVin());
+        Salesman salesman = salesmanService.findSalesman(request.getSalesmanPesel());
         Invoice invoice = buildInvoice(car, salesman);
         Set<Invoice> existingInvoices = existingCustomer.getInvoices();
         existingInvoices.add(invoice);
-        return existingCustomer.withInvoices(existingInvoices);
+        customerService.issueInvoice(existingCustomer.withInvoices(existingInvoices));
+        return invoice;
+    }
+
+    private Customer buildCustomer(CarPurchaseRequest inputData, Invoice invoice) {
+        return Customer.builder()
+                .name(inputData.getCustomerName())
+                .surname(inputData.getCustomerSurname())
+                .phone(inputData.getCustomerPhone())
+                .email(inputData.getCustomerEmail())
+                .address(Address.builder()
+                        .country(inputData.getCustomerAddressCountry())
+                        .city(inputData.getCustomerAddressCity())
+                        .postalCode(inputData.getCustomerAddressPostalCode())
+                        .address(inputData.getCustomerAddressStreet())
+                        .build())
+                .invoices(Set.of(invoice))
+                .build();
     }
 
     private Invoice buildInvoice(CarToBuy car, Salesman salesman) {
         return Invoice.builder()
             .invoiceNumber(UUID.randomUUID().toString())
-            .dateTime(OffsetDateTime.of(2025, 10, 1, 12, 0, 0, 0, ZoneOffset.UTC))
+            .dateTime(OffsetDateTime.now(ZoneOffset.UTC))
             .car(car)
             .salesman(salesman)
             .build();
-    }*/
+    }
 
 }

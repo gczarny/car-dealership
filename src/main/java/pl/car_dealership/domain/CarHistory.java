@@ -26,4 +26,5 @@ public class CarHistory {
         List<Service> services;
         List<Part> parts;
     }
+
 }

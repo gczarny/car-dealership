@@ -9,5 +9,5 @@ public interface CarToBuyDAO {
 
     Optional<CarToBuy> findCarToBuyByVin(String vin);
 
-    List<CarToBuy> findAvailableCars();
+    List<CarToBuy> findAvailable();
 }
