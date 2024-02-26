@@ -9,7 +9,7 @@ values ('Robert', 'Śrubokręt', '52070997836'),
        ('Zygmunt', 'Naprawa', '83011863727'),
        ('Remigiusz', 'Alufelga', '67111396321');
 
-insert into car_to_buy(vin, brand, model, year, color, price)
+insert into car_to_buy(vin, brand, model, production_year, color, price)
 values ('1FT7X2B60FEA74019', 'BMW', 'Series 1', 2020, 'black', 20000),
        ('1N6BD06T45C416702', 'BMW', 'Series 3', 2020, 'black', 30000),
        ('1G1PE5S97B7239380', 'BMW', 'Series 3', 2020, 'black', 30000),
