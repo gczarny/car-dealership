@@ -21,8 +21,8 @@ import java.time.LocalDate;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(CepikController.API_CEPIK)
-public class CepikController {
+@RequestMapping(CepikRestController.API_CEPIK)
+public class CepikRestController {
 
     public static final String API_CEPIK = "/api/cepik";
     public static final String CEPIK_RANDOM = "/random";

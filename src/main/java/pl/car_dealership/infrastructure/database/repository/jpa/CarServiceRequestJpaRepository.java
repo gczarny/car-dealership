@@ -28,4 +28,5 @@ public interface CarServiceRequestJpaRepository extends JpaRepository<CarService
         }
     )
     Set<CarServiceRequestEntity> findAllByCompletedDateTimeIsNull();
+
 }

@@ -20,7 +20,7 @@ public class MechanicRestController {
 
     public static final String API_MECHANIC = "/api/mechanic";
     public static final String AVAILABLE_SERVICE_REQUESTS = "/availableServiceRequests";
-    public static final String MECHANIC_WORK_UNIT = "/workkUnit";
+    public static final String MECHANIC_WORK_UNIT = "/workUnit";
 
     private final CarServiceRequestService carServiceRequestService;
     private final CarServiceProcessingService carServiceProcessingService;

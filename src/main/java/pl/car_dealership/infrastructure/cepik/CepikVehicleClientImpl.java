@@ -20,8 +20,9 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class CepikVehicleClientImpl implements CepikVehicleDAO {
 
-    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd");
-    public static final String VOIVODESHIP_KEY = "MAZOWIECKIE";
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd");
+
+    private static final String VOIVODESHIP_KEY = "MAZOWIECKIE";
     private static final String VOIVODESHIP_DICTIONARY = "wojewodztwa";
     private final CepikVehicleMapper cepikVehicleMapper;
     private final PojazdyApi pojazdyApi;
@@ -49,23 +50,8 @@ public class CepikVehicleClientImpl implements CepikVehicleDAO {
                 ));
     }
 
-    private Optional<JsonApiForListVehicle> callVehicles(LocalDate dateFrom, LocalDate dateTo, String key) {
-        return Optional.ofNullable(pojazdyApi.getListaPojazdow(
-                key,
-                dateFrom.format(DATE_FORMATTER),
-                dateTo.format(DATE_FORMATTER),
-                "1",
-                true,
-                true,
-                null,
-                "50",
-                "1",
-                null
-        ).block());
-    }
-
     private DictionaryDtoElement getDictionaryEntry() {
-        JsonApiForObjectDictionary dictionary = Optional.ofNullable(sownikiApi.getSlownik(VOIVODESHIP_DICTIONARY).block())
+        var dictionary = Optional.ofNullable(sownikiApi.getSlownik(VOIVODESHIP_DICTIONARY).block())
                 .orElseThrow(() -> new NotFoundException(
                         "Could not find dictionary definition for: [%s]".formatted(VOIVODESHIP_DICTIONARY)
                 ));
@@ -79,5 +65,20 @@ public class CepikVehicleClientImpl implements CepikVehicleDAO {
                 .orElseThrow(() -> new NotFoundException(
                         "Could not find dictionary entry for: [%s]".formatted(VOIVODESHIP_KEY)
                 ));
+    }
+
+    private Optional<JsonApiForListVehicle> callVehicles(LocalDate dateFrom, LocalDate dateTo, String key) {
+        return Optional.ofNullable(pojazdyApi.getListaPojazdow(
+                key,
+                dateFrom.format(DATE_TIME_FORMATTER),
+                dateTo.format(DATE_TIME_FORMATTER),
+                "1",
+                true,
+                true,
+                null,
+                "50",
+                "1",
+                null
+        ).block());
     }
 }

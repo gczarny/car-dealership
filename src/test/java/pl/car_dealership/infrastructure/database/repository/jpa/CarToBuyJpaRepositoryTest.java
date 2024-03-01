@@ -1,4 +1,4 @@
-package pl.car_dealership.api.infrastructure.database.repository.jpa;
+package pl.car_dealership.infrastructure.database.repository.jpa;
 
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -16,14 +16,14 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static pl.car_dealership.util.EntityFixtures.*;
 
-/*@DataJpaTest
+@DataJpaTest
 @TestPropertySource(locations = "classpath:application-test.yml")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(PersistenceContainerTestConfiguration.class)
-@AllArgsConstructor(onConstructor = @__(@Autowired))*/
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class CarToBuyJpaRepositoryTest {
 
-/*    private CarToBuyJpaRepository carToBuyJpaRepository;
+    private CarToBuyJpaRepository carToBuyJpaRepository;
 
     @Test
     void thatCarBeSavedCorrectly() {
@@ -36,5 +36,5 @@ public class CarToBuyJpaRepositoryTest {
 
         // then
         assertThat(availableCars).hasSize(9);
-    }*/
+    }
 }
