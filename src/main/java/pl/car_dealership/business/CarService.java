@@ -29,7 +29,7 @@ public class CarService {
         return availableCars;
     }
 
-   @Transactional
+    @Transactional
     public CarToBuy findCarToBuy(String vin) {
         Optional<CarToBuy> carToBuyByVin = carToBuyDAO.findCarToBuyByVin(vin);
         if (carToBuyByVin.isEmpty()) {

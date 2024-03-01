@@ -9,6 +9,7 @@ import pl.car_dealership.domain.*;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -31,10 +32,14 @@ public class CarPurchaseService {
 
     @Transactional
     public Invoice purchase(final CarPurchaseRequest request) {
-        return request.getExistingCustomerEmail().isBlank()
-        ? processFirstTimeToBuyCustomer(request)
-        : processNextTimeToBuyCustomer(request);
+        return existingCustomerEmailExists(request.getExistingCustomerEmail())
+        ? processNextTimeToBuyCustomer(request)
+        : processFirstTimeToBuyCustomer(request);
 
+    }
+
+    private boolean existingCustomerEmailExists(String email) {
+        return Objects.nonNull(email) && !email.isBlank();
     }
 
     private Invoice processFirstTimeToBuyCustomer(CarPurchaseRequest request) {

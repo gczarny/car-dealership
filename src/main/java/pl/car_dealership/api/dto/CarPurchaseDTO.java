@@ -24,7 +24,7 @@ public class CarPurchaseDTO {
     private String existingCustomerEmail;
     private String customerName;
     private String customerSurname;
-    @Size()
+    @Size
     @Pattern(regexp = "^[+]\\d{2}\\s\\d{3}\\s\\d{3}\\s\\d{3}$")
     private String customerPhone;
     @Email
@@ -39,15 +39,15 @@ public class CarPurchaseDTO {
 
     public static CarPurchaseDTO buildDefaultData() {
         return CarPurchaseDTO.builder()
-                .customerName("Alfred")
-                .customerSurname("Samochodowy")
-                .customerPhone("+48 2902201")
-                .customerEmail("alfred@gmail.com")
-                .customerAddressCountry("Polska")
-                .customerAddressCity("Warszawa")
-                .customerAddressPostalCode("00-001")
-                .customerAddressStreet("Bokserska 1")
-                .build();
+            .customerName("Alfred")
+            .customerSurname("Samochodowy")
+            .customerPhone("+48 754 552 234")
+            .customerEmail("alf.samoch@gmail.com")
+            .customerAddressCountry("Polska")
+            .customerAddressCity("Wrocław")
+            .customerAddressPostalCode("50-001")
+            .customerAddressStreet("Bokserska 15")
+            .build();
     }
 
     public Map<String, String> asMap() {

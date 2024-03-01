@@ -38,7 +38,7 @@ public class CarServiceCustomerRequestDTO {
 
     private String customerComment;
 
-    public static Object buildDefault() {
+    public static CarServiceCustomerRequestDTO buildDefault() {
         return CarServiceCustomerRequestDTO.builder()
                 .existingCustomerEmail("alfred@gmail.com")
                 .existingCarVin("1FT7X2B60FEA74019")

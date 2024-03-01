@@ -18,43 +18,43 @@ import java.util.Optional;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public ModelAndView handlerException(Exception ex) {
-        String message = "Unexpected exception occurred: [%s]".formatted(ex.getMessage());
+    public ModelAndView handleException(Exception ex) {
+        String message = String.format("Other exception occurred: [%s]", ex.getMessage());
         log.error(message, ex);
-        ModelAndView modelAndView = new ModelAndView("error");
-        modelAndView.addObject("errorMessage", message);
-        return modelAndView;
+        ModelAndView modelView = new ModelAndView("error");
+        modelView.addObject("errorMessage", message);
+        return modelView;
     }
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ModelAndView handlerException(NotFoundException ex) {
-        String message = "Could not find a resource: [%s]".formatted(ex.getMessage());
+    public ModelAndView handleNoResourceFound(NotFoundException ex) {
+        String message = String.format("Could not find a resource: [%s]", ex.getMessage());
         log.error(message, ex);
-        ModelAndView modelAndView = new ModelAndView("error");
-        modelAndView.addObject("errorMessage", message);
-        return modelAndView;
+        ModelAndView modelView = new ModelAndView("error");
+        modelView.addObject("errorMessage", message);
+        return modelView;
     }
 
     @ExceptionHandler(ProcessingException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ModelAndView handlerException(ProcessingException ex) {
-        String message = "Internal server error occured: [%s]".formatted(ex.getMessage());
+    public ModelAndView handleException(ProcessingException ex) {
+        String message = String.format("Processing exception occurred: [%s]", ex.getMessage());
         log.error(message, ex);
-        ModelAndView modelAndView = new ModelAndView("error");
-        modelAndView.addObject("errorMessage", message);
-        return modelAndView;
+        ModelAndView modelView = new ModelAndView("error");
+        modelView.addObject("errorMessage", message);
+        return modelView;
     }
 
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ModelAndView handlerException(BindException ex) {
+    public ModelAndView handleException(BindException ex) {
         String message = String.format("Bad request for field: [%s], wrong value: [%s]",
             Optional.ofNullable(ex.getFieldError()).map(FieldError::getField).orElse(null),
             Optional.ofNullable(ex.getFieldError()).map(FieldError::getRejectedValue).orElse(null));
         log.error(message, ex);
-        ModelAndView modelAndView = new ModelAndView("error");
-        modelAndView.addObject("errorMessage", message);
-        return modelAndView;
+        ModelAndView modelView = new ModelAndView("error");
+        modelView.addObject("errorMessage", message);
+        return modelView;
     }
 }

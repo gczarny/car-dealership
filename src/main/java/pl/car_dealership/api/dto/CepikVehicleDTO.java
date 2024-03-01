@@ -4,18 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.car_dealership.domain.Invoice;
 
 import java.math.BigDecimal;
-import java.util.Set;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SalesmanDTO {
+public class CepikVehicleDTO {
 
-    String name;
-    String surname;
-    String pesel;
+    private String cepikId;
+    private String brand;
+    private String model;
+    private String type;
+    private BigDecimal engineCapacity;
+    private Integer weight;
+    private String fuel;
 }

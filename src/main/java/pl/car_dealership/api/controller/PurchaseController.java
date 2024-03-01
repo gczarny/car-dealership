@@ -76,7 +76,7 @@ public class PurchaseController {
         return "car_purchase_done";
     }
 
-    private static boolean existingCustomerEmailExists(String email) {
+    private boolean existingCustomerEmailExists(String email) {
         return Objects.nonNull(email) && !email.isBlank();
     }
 }

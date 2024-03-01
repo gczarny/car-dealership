@@ -7,5 +7,5 @@ import pl.car_dealership.domain.Salesman;
 @Mapper(componentModel = "spring")
 public interface SalesmanMapper {
 
-    SalesmanDTO map(final Salesman car);
+    SalesmanDTO map(final Salesman salesman);
 }

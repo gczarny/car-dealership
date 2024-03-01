@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class MechanicDTO {
 
-    private String name;
-    private String surname;
-    private String pesel;
+    String name;
+    String surname;
+    String pesel;
 }

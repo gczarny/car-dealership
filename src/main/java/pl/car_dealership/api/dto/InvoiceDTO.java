@@ -4,18 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.car_dealership.domain.Invoice;
 
 import java.math.BigDecimal;
-import java.util.Set;
+import java.time.OffsetDateTime;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SalesmanDTO {
+public class InvoiceDTO {
 
-    String name;
-    String surname;
-    String pesel;
+    private String invoiceNumber;
+    private OffsetDateTime dateTime;
 }

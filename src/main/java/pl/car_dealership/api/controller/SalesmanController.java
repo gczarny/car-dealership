@@ -26,17 +26,17 @@ public class SalesmanController {
     @GetMapping(value = SALESMAN)
     public String homePage(Model model) {
         var availableCars = carPurchaseService.availableCars().stream()
-                .map(carMapper::map)
-                .toList();
-        var availableSalesmans = carPurchaseService.availableSalesman().stream()
-                .map(salesmanMapper::map)
-                .toList();
+            .map(carMapper::map)
+            .toList();
+        var availableSalesmen = carPurchaseService.availableSalesman().stream()
+            .map(salesmanMapper::map)
+            .toList();
         var availableMechanics = carServiceRequestService.availableMechanics().stream()
-                .map(mechanicMapper::map)
-                .toList();
+            .map(mechanicMapper::map)
+            .toList();
 
-        model.addAttribute("availableCarsDTOs", availableCars);
-        model.addAttribute("availableSalesmanDTOs", availableSalesmans);
+        model.addAttribute("availableCarDTOs", availableCars);
+        model.addAttribute("availableSalesmenDTOs", availableSalesmen);
         model.addAttribute("availableMechanicDTOs", availableMechanics);
 
         return "salesman_portal";

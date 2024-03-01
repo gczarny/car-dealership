@@ -1,9 +1,12 @@
 package pl.car_dealership.infrastructure.security;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +23,7 @@ public class CarDealershipUserDetailsService implements UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String userName) {
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         UserEntity user = userRepository.findByUserName(userName);
         List<SimpleGrantedAuthority> authorities = getUserAuthority(user.getRoles());
         return buildUserForAuthentication(user, authorities);
@@ -34,14 +37,14 @@ public class CarDealershipUserDetailsService implements UserDetailsService {
     }
 
     private UserDetails buildUserForAuthentication(UserEntity user, List<SimpleGrantedAuthority> authorities) {
-        return new org.springframework.security.core.userdetails.User(
-                user.getUserName(),
-                user.getPassword(),
-                user.getActive(),
-                true,
-                true,
-                true,
-                authorities
+        return new User(
+            user.getUserName(),
+            user.getPassword(),
+            user.getActive(),
+            true,
+            true,
+            true,
+            authorities
         );
     }
 }

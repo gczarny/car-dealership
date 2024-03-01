@@ -34,6 +34,10 @@ insert into car_dealership_user (user_id, user_name, email, password, active)
 values (7, 'remigiusz_alufelga', 'remigiusz_alufelga@zajavka.pl',
         '$2a$12$TwQsp1IusXTDl7LwZqL0qeu49Ypr6vRdEzRq2vAsgb.zvOtrnzm5G', true);
 
+insert into car_dealership_user (user_id, user_name, email, password, active)
+values (8, 'apiuser', 'apiuser@zajavka.pl',
+        '$2a$12$TwQsp1IusXTDl7LwZqL0qeu49Ypr6vRdEzRq2vAsgb.zvOtrnzm5G', true);
+
 UPDATE salesman
 SET user_id = 1
 WHERE pesel = '67020499436';
@@ -64,7 +68,8 @@ WHERE pesel = '67111396321';
 
 insert into car_dealership_role (role_id, role)
 values (1, 'SALESMAN'),
-       (2, 'MECHANIC');
+       (2, 'MECHANIC'),
+       (3, 'REST_API');
 
 insert into car_dealership_user_role (user_id, role_id)
 values (1, 1),
@@ -75,7 +80,8 @@ values (1, 1),
 insert into car_dealership_user_role (user_id, role_id)
 values (5, 2),
        (6, 2),
-       (7, 2);
+       (7, 2),
+       (8, 3);
 
 ALTER TABLE salesman
     ALTER COLUMN user_id SET NOT NULL;

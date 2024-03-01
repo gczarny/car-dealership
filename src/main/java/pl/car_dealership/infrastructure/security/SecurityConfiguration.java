@@ -46,6 +46,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/mechanic/**").hasAnyAuthority("MECHANIC", "ADMIN")
                 .requestMatchers("/salesman/**", "/purchase/**", "/service/**").hasAnyAuthority("SALESMAN", "ADMIN")
                 .requestMatchers("/", "/car/**", "/images/**").hasAnyAuthority("MECHANIC", "SALESMAN", "ADMIN")
+                .requestMatchers("/api/**").hasAnyAuthority("REST_API")
                 .and()
                 .formLogin()
                 .permitAll()
@@ -62,7 +63,8 @@ public class SecurityConfiguration {
     @Bean
     @ConditionalOnProperty(value = "spring.security.enabled", havingValue = "false")
     public SecurityFilterChain securityDisabled(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeHttpRequests()
+        httpSecurity.csrf().disable()
+                .authorizeHttpRequests()
                 .anyRequest()
                 .permitAll();
 

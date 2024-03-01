@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import pl.car_dealership.api.dto.CarPurchaseDTO;
@@ -25,13 +24,14 @@ import java.util.stream.Stream;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @WebMvcTest(controllers = PurchaseController.class)
 @AutoConfigureMockMvc(addFilters = false)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class PurchaseControllerTest {
+public class PurchaseControllerWebMvcTest {
 
     private MockMvc mockMvc;
 
@@ -107,20 +107,26 @@ public class PurchaseControllerTest {
 
     public static Stream<Arguments> thatPhoneValidationWorksCorrectly() {
         return Stream.of(
-                Arguments.of(false, "12345678"),
-                Arguments.of(false, "1234567890"),
-                Arguments.of(false, " "),
-                Arguments.of(false, ""),
-                Arguments.of(false, "()"),
-                Arguments.of(false, "+"),
-                Arguments.of(false, "() + ()"),
-                Arguments.of(false, "1"),
-                Arguments.of(false, " 1"),
-                Arguments.of(false, "48 (12) 504 203 260"),
-                Arguments.of(false, "48 (12) 504-203-260"),
-                Arguments.of(false, "48(12)504203260"),
-                Arguments.of(false, "+ 48 504 203 260"),
-                Arguments.of(true, "+48 504 203 260")
+            Arguments.of(false, ""),
+            Arguments.of(false, "+48 504 203 260@@"),
+            Arguments.of(false, "+48.504.203.260"),
+            Arguments.of(false, "+55(123) 456-78-90-"),
+            Arguments.of(false, "+55(123) - 456-78-90"),
+            Arguments.of(false, "504.203.260"),
+            Arguments.of(false, " "),
+            Arguments.of(false, "-"),
+            Arguments.of(false, "()"),
+            Arguments.of(false, "() + ()"),
+            Arguments.of(false, "(21 7777"),
+            Arguments.of(false, "+48 (21)"),
+            Arguments.of(false, "+"),
+            Arguments.of(false, " 1"),
+            Arguments.of(false, "1"),
+            Arguments.of(false, "+48 (12) 504 203 260"),
+            Arguments.of(false, "+48 (12) 504-203-260"),
+            Arguments.of(false, "+48(12)504203260"),
+            Arguments.of(false, "555-5555-555"),
+            Arguments.of(true, "+48 504 203 260")
         );
     }
 

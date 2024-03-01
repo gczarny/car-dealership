@@ -4,18 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.car_dealership.domain.Invoice;
 
-import java.math.BigDecimal;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SalesmanDTO {
+public class CarServiceRequestsDTO {
 
-    String name;
-    String surname;
-    String pesel;
+    private List<CarServiceRequestDTO> carServiceRequests;
 }
