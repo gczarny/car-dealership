@@ -97,6 +97,10 @@ sourceSets {
 
 compileJava.dependsOn tasks.openApiGenerate
 
+bootJar {
+    archiveFileName = "car_dealership.${archiveExtension.get()}"
+}
+
 test {
     useJUnitPlatform()
     testLogging {
